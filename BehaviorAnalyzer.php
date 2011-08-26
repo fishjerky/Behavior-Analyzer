@@ -14,11 +14,15 @@ class BehaviorAnalyzer{
 	protected $expectedItemAmount;
 	protected $PATH_LOGS;
 	//log behavior
-	function __construct($path = 'logs/'){
-		Logger::configure('log4php.properties'); 
+	//if log dir path not exist
+	function __construct($path_log = '.',$path_config = ''){
+		if(is_dir($path_log))
+			$this->PATH_LOGS = $path_log;
+		if(file_exists($path_config))
+			Logger::configure($path_config); 
+
 		$this->logger = Logger::getLogger("behavior");
 		
-		$this->PATH_LOGS = $path;
 		$this->expectedItemAmount = 5;
 	}
 
@@ -91,6 +95,8 @@ class BehaviorAnalyzer{
 	function getPeriodLog($periodStartSecond,&$actions){
 		//echo "a week ago =" .$weekAgo .'<br/>';
 		$dir = dir($this->PATH_LOGS);
+		if(!$dir)
+			return;
 		while (($filename = $dir->read()) !== false)
 		{
 			//within this week
