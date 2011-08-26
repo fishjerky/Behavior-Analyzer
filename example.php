@@ -1,8 +1,9 @@
 <?php
-date_default_timezone_se('Asia/Taipei');
+include('BehaviorAnalyzer.php');
+date_default_timezone_set('Asia/Taipei');
 
-logBehavior();
-//display();
+//logBehavior();
+display();
 
 
 function display(){

@@ -11,6 +11,7 @@ include_once('log4php/Logger.php');
 
 class BehaviorAnalyzer{
 	protected $logger;
+	protected $expectedItemAmount;
 	protected $PATH_LOGS;
 	//log behavior
 	function __construct($path = 'logs/'){
@@ -18,6 +19,7 @@ class BehaviorAnalyzer{
 		$this->logger = Logger::getLogger("behavior");
 		
 		$this->PATH_LOGS = $path;
+		$this->expectedItemAmount = 5;
 	}
 
 	function log($controller, $action, $uid, $note){
@@ -118,7 +120,7 @@ class BehaviorAnalyzer{
 
 	function parse(&$actions, $line){
 		$values = explode(',',$line);
-		if(count($values) < 5)
+		if(count($values) < $this->expectedItemAmount)
 			return;
 		$key = $values[2] . '/' . $values[3];
 		if(!isset($actions[$key]))
